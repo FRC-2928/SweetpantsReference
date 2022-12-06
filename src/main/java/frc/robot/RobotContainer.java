@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.oi.DriverOI;
+import frc.robot.oi.OperatorOI;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,7 +31,9 @@ public class RobotContainer {
 
   // XBox Controllers
   private final XboxController m_driverController = new XboxController(0);
+  private final XboxController m_operatorController = new XboxController(1);
   private final DriverOI m_driverOI = new DriverOI(m_driverController);
+  private final OperatorOI m_operatorOI = new OperatorOI(m_operatorController);
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -70,6 +73,9 @@ public class RobotContainer {
     // Configure button commands
     m_driverOI.getShiftLowButton().whenPressed(new InstantCommand(m_transmission::setLow, m_transmission));
     m_driverOI.getShiftHighButton().whenPressed(new InstantCommand(m_transmission::setHigh, m_transmission));
+
+    m_operatorOI.getShiftLowButton().whenPressed(new InstantCommand(m_transmission::setLow, m_transmission));
+    m_operatorOI.getShiftHighButton().whenPressed(new InstantCommand(m_transmission::setHigh, m_transmission));
   }
 
   /**
