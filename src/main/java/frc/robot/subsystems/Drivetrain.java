@@ -159,18 +159,20 @@ public class Drivetrain extends SubsystemBase {
   // -----------------------------------------------------------
   // System State
   // -----------------------------------------------------------
-  public double motorRotationsToWheelRotations(double motorRotations, Transmission.GearState gearState) {
+  public double motorRotationsToWheelRotations(double encoderTicks, Transmission.GearState gearState) {
     if (gearState == Transmission.GearState.HIGH) {
-        return motorRotations/(DrivetrainConstants.kEncoderCPR * DrivetrainConstants.kHighGearRatio);
+        return encoderTicks/(DrivetrainConstants.kEncoderCPR * DrivetrainConstants.kHighGearRatio);
     }
-    return motorRotations/(DrivetrainConstants.kEncoderCPR * DrivetrainConstants.kLowGearRatio);
+    return encoderTicks/(DrivetrainConstants.kEncoderCPR * DrivetrainConstants.kLowGearRatio);
   }
 
   public double wheelRotationsToMeters(double wheelRotations) {
     return DrivetrainConstants.kWheelDiameterMeters * Math.PI * wheelRotations;
   }
-    // Encoder ticks to meters
-    public double encoderTicksToMeters(double encoderTicks) {
+    
+  // Encoder ticks to meters. Uses the gear ratio to calculate the number of
+  // wheel rotations, and then converts the wheel rotations to meters.
+  public double encoderTicksToMeters(double encoderTicks) {
       var gearState = m_gearStateSupplier.get();
       double wheelRotations = motorRotationsToWheelRotations(encoderTicks, gearState);
       return wheelRotationsToMeters(wheelRotations);
