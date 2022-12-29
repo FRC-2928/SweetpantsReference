@@ -66,6 +66,7 @@ public class Drivetrain extends SubsystemBase {
     // set the PID values for each individual wheel
     for(TalonFX fx : new TalonFX[] {m_leftLeader, m_rightLeader}){
         
+        // Config the Velocity closed loop gains in slot0
         fx.config_kP(0, DrivetrainConstants.kGainsProfiled.kP, 0);
         fx.config_kI(0, DrivetrainConstants.kGainsProfiled.kI, 0);
         fx.config_kD(0, DrivetrainConstants.kGainsProfiled.kD, 0);
